@@ -1,0 +1,152 @@
+RESUMEN EXPLICATIVO DE SQL - INICIACIÓN
+
+1. ¿QUÉ ES SQL?
+----------------
+SQL es un lenguaje que se utiliza para trabajar con bases de datos. Nos permite:
+- Crear bases de datos y tablas.
+- Guardar datos en ellas.
+- Consultar información.
+- Ordenar, agrupar, buscar datos específicos, etc.
+
+2. CREAR UNA BASE DE DATOS Y UNA TABLA
+---------------------------------------
+Primero se crea la base de datos y luego se le indica a SQL que queremos trabajar con ella:
+
+CREATE DATABASE MiBaseDeDatos;
+USE MiBaseDeDatos;
+
+Luego, creamos una tabla. Ejemplo:
+CREATE TABLE Clientes (
+    id_cliente INT PRIMARY KEY AUTO_INCREMENT, -- número único para cada cliente
+    nombre VARCHAR(60) NOT NULL,               -- nombre obligatorio
+    apellido1 VARCHAR(120) NOT NULL,
+    apellido2 VARCHAR(120),
+    ciudad VARCHAR(50),
+    edad INT NOT NULL
+);
+
+¿QUÉ SIGNIFICAN ESTOS TIPOS DE DATOS?
+- INT: número entero (sin decimales).
+- VARCHAR(n): texto, donde "n" es la cantidad máxima de letras que se permiten.
+- AUTO_INCREMENT: el valor se incrementa solo (útil para un campo ID).
+- NOT NULL: ese campo no puede quedar vacío.
+
+3. INSERTAR DATOS EN UNA TABLA
+------------------------------
+Usamos la instrucción INSERT INTO para meter datos:
+
+INSERT INTO Clientes (nombre, apellido1, ciudad, edad) VALUES 
+('Juan', 'Perez', 'Madrid', 15),
+('Pepe', 'Fdez', 'Barcelona', 25);
+
+*No hace falta poner el id_cliente porque se genera solo (AUTO_INCREMENT).*
+
+4. RELACIONES ENTRE TABLAS
+---------------------------
+A veces, queremos relacionar una tabla con otra. Por ejemplo, si un cliente hace un pedido:
+
+CREATE TABLE Pedidos (
+    id_pedido INT PRIMARY KEY AUTO_INCREMENT,
+    id_cliente INT NOT NULL,
+    fecha_pedido DATE NOT NULL,
+    total DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+Aquí, cada pedido tiene un cliente relacionado. Gracias al "FOREIGN KEY", se conectan las dos tablas.
+
+- ON DELETE CASCADE: si borro un cliente, también borro sus pedidos.
+- ON UPDATE CASCADE: si actualizo el id del cliente, se actualiza en la tabla de pedidos.
+
+5. CONSULTAR DATOS (SELECT)
+---------------------------
+SELECT permite buscar y mostrar datos.
+
+Ver todos los clientes:
+SELECT * FROM Clientes;
+
+Ver solo nombres y edades:
+SELECT nombre, edad FROM Clientes;
+
+6. ORDENAR RESULTADOS (ORDER BY)
+--------------------------------
+Ordenar clientes por edad:
+SELECT nombre, edad FROM Clientes ORDER BY edad ASC;
+
+ASC = Ascendente (de menor a mayor), DESC = Descendente.
+
+Ordenar por dos columnas:
+SELECT * FROM Clientes ORDER BY nombre ASC, apellido1 DESC;
+
+7. AGRUPAR DATOS (GROUP BY)
+---------------------------
+Agrupar es como "hacer grupos" de registros por un valor en común.
+
+Ejemplo: cuántos clientes hay por ciudad:
+SELECT ciudad, COUNT(*) AS total FROM Clientes GROUP BY ciudad;
+
+Edad promedio por ciudad:
+SELECT ciudad, AVG(edad) FROM Clientes GROUP BY ciudad;
+
+8. FUNCIONES IMPORTANTES DE GRUPO
+----------------------------------
+- COUNT(): cuenta cuántas filas hay.
+- SUM(): suma los valores numéricos.
+- MAX() y MIN(): máximo y mínimo valor.
+- AVG(): promedio (media).
+
+9. FILTRAR DATOS POR PATRONES (LIKE)
+-------------------------------------
+LIKE sirve para buscar textos con ciertas letras o patrones.
+
+Ejemplo: clientes cuyo nombre contiene "a":
+SELECT nombre FROM Clientes WHERE nombre LIKE '%a%';
+
+Empieza con "M":
+SELECT nombre FROM Clientes WHERE apellido1 LIKE 'M%';
+
+% = cualquier letra, antes o después.
+
+10. VALORES ÚNICOS (DISTINCT)
+-----------------------------
+Para evitar duplicados en los resultados:
+
+SELECT DISTINCT ciudad FROM Clientes;
+
+11. UNIR DATOS DE VARIAS TABLAS (JOIN)
+--------------------------------------
+INNER JOIN combina datos de dos tablas que tienen relación entre sí.
+
+Ejemplo: Ver el nombre del cliente y la fecha de su pedido (abril):
+
+SELECT c.nombre, c.apellido1, p.fecha_pedido 
+FROM Clientes c
+INNER JOIN Pedidos p ON c.id_cliente = p.id_cliente
+WHERE p.fecha_pedido BETWEEN '2023-04-01' AND '2023-04-30';
+
+- BETWEEN se usa para indicar un rango de fechas.
+- Se usan alias (c, p) para abreviar el nombre de las tablas.
+
+12. AGRUPAR Y UNIR (JOIN + GROUP BY)
+-------------------------------------
+Ver cuántos pedidos hizo cada cliente y cuánto gastó:
+
+SELECT c.nombre, c.apellido1, COUNT(p.id_pedido) AS total_pedidos, SUM(p.total) AS total_gastado
+FROM Clientes c
+INNER JOIN Pedidos p ON c.id_cliente = p.id_cliente
+GROUP BY c.id_cliente, c.nombre, c.apellido1
+ORDER BY total_gastado DESC;
+
+13. FILTRAR GRUPOS (HAVING)
+---------------------------
+HAVING se usa después de agrupar (a diferencia de WHERE).
+
+Ejemplo: ciudades que tienen más de un pedido:
+
+SELECT ciudad, COUNT(p.id_pedido) AS total_pedidos
+FROM Clientes c
+INNER JOIN Pedidos p ON c.id_cliente = p.id_cliente
+GROUP BY ciudad
+HAVING COUNT(p.id_pedido) > 1;
