@@ -1,0 +1,24 @@
+Un archivo DTD es un archivo de texto (.dtd) que define la estructura permitida para un documento XML. 
+Se basa en declaraciones:
+
+1. Elementos (<!ELEMENT nombre tipo_contenido>):
+
+Define qué etiquetas XML pueden existir.
+El tipo_contenido indica qué puede contener el elemento:
+EMPTY: Nada.
+(#PCDATA): Texto.
+(elemento1, elemento2): Secuencia de elementos hijos.
+(elemento1 | elemento2): Elección entre elementos hijos.
+(elemento*): Cero o más veces el elemento.
+(elemento+): Una o más veces el elemento.
+(elemento?): Cero o una vez el elemento (opcional).
+
+2. Atributos (<!ATTLIST elemento nombre tipo valor_predeterminado>):
+
+Define qué atributos puede tener un elemento.
+tipo: El tipo de dato del atributo (ej: CDATA para texto, ID para identificador único).
+valor_predeterminado: Cómo se comporta si no está presente (#REQUIRED, #IMPLIED, #FIXED "valor", o un valor por defecto).
+
+
+3. Entidades (<!ENTITY nombre "valor"> o <!ENTITY nombre SYSTEM "URI" NDATA tipo>):
+Define atajos para texto (&nombre;) o referencias a datos no XML.
