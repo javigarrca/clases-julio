@@ -1,0 +1,15 @@
+<!-- Ejemplo xml-->
+
+<libro>
+    <titulo>El principito</titulo>
+    <autor>Antoine de Saint-Exupery</autor>
+    <anyo>1934</anyo>
+</libro>
+
+<!--
+
+    <libro> es el elemento raiz, el que contiene toda la informacion del libro.
+    <titulo>, <autor> y <anyo> son elementos hijos del elemento libro, y cada uno contiene un dato específico.
+
+    El Principito, Antoine de Saint-Exupéry y 1943 son el contenido de esos elementos.
+-->

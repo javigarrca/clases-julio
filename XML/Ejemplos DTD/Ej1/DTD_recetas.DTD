@@ -1,0 +1,24 @@
+<!ELEMENT receta (ingredientes, pasos)>
+<!ATTLIST receta 
+          nombre CDATA #REQUIRED>
+
+<!ELEMENT ingredientes (ingrediente+)>
+<!ELEMENT ingrediente (#PCDATA)>
+<!ATTLIST ingrediente
+          cantidad CDATA #REQUIRED 
+          unidad CDATA #IMPLIED>
+<!ELEMENT pasos (paso+)>
+<!ELEMENT paso (#PCDATA)>
+<!ATTLIST paso 
+          numero CDATA #REQUIRED>
+
+<!--
+<!ATTLIST receta nombre CDATA #REQUIRED>: Define que el elemento receta tiene un atributo llamado 
+    nombre de tipo CDATA (datos de carácter) y que es #REQUIRED (obligatorio).
+<!ELEMENT ingredientes (ingrediente+)>: El + significa que el elemento ingredientes debe contener 
+        al menos uno o más elementos ingrediente.
+<!ATTLIST ingrediente cantidad CDATA #REQUIRED unidad CDATA #IMPLIED>: 
+        El elemento ingrediente tiene atributos cantidad (obligatorio) y unidad (implícito, es decir, opcional).
+<!ELEMENT pasos (paso+)>: Similar a ingredientes, debe haber al menos un paso.
+<!ATTLIST paso numero CDATA #REQUIRED>: El elemento paso tiene un atributo numero que es obligatorio.
+-->

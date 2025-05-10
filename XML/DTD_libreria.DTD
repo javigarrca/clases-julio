@@ -1,0 +1,13 @@
+<!-- DTD para el ejemplo anterior-->
+<!ELEMENT libro(titulo, autor, anyo)>
+<!ELEMENT titulo (#PCDATA)>
+<!ELEMENT autor (#PCDATA)>
+<!ELEMENT anyo (#PCDATA)>
+
+<!--
+<!ELEMENT libro (titulo, autor, año)>: Define que el elemento libro debe contener 
+    exactamente un elemento titulo, seguido de un elemento autor, seguido de un elemento año, en ese orden.
+<!ELEMENT titulo (#PCDATA)>: Define que el elemento titulo debe contener datos de carácter parseado (#PCDATA), 
+    es decir, texto normal.
+
+-->

@@ -1,0 +1,6 @@
+<!DOCTYPE libro SYSTEM "DTD_libreria.dtd">
+<libro>
+  <titulo>El Principito</titulo>
+  <autor>Antoine de Saint-Exupery</autor>
+  <anyo>1943</anyo>
+</libro>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE receta SYSTEM "DTD_recetas.DTD">
+<receta nombre="Tarta de Manzana">
+  <ingredientes>
+    <ingrediente cantidad="3" unidad="manzanas">Manzanas</ingrediente>
+    <ingrediente cantidad="200" unidad="gramos">Harina</ingrediente>
+    <ingrediente cantidad="150" unidad="gramos">Azúcar</ingrediente>
+    <ingrediente cantidad="1" unidad="unidad">Huevo</ingrediente>
+  </ingredientes>
+  <pasos>
+    <paso numero="1">Pelar y cortar las manzanas.</paso>
+    <paso numero="2">Mezclar la harina y el azúcar.</paso>
+    <paso numero="3">Añadir el huevo y las manzanas.</paso>
+    <paso numero="4">Hornear durante 30 minutos.</paso>
+  </pasos>
+</receta>
